@@ -19,9 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.yandex.metrica.PreloadInfo;
-import com.yandex.metrica.AppMetrica;
-import com.yandex.metrica.AppMetricaConfig;
+import io.appmetrica.analytics.AppMetrica;
+import io.appmetrica.analytics.AppMetricaConfig;
 
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
