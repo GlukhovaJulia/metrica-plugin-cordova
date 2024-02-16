@@ -69,7 +69,7 @@ public class AppMetricaPlugin extends CordovaPlugin {
         final String apiKey = configObj.getString("apiKey");
 
         // Creating an extended library configuration.
-        final AppMetricaConfig config = AppMetricaConfig.newConfigBuilder(apiKey).withLogs().build();
+        final AppMetricaConfig config = AppMetricaConfig.newConfigBuilder(apiKey).withLogs().withRevenueAutoTrackingEnabled(true).build();
 
         final Context context = getActivity().getApplicationContext();
         // Initializing the AppMetrica SDK.
