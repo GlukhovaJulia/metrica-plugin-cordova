@@ -47,6 +47,12 @@ advertisement**.
 * Implemented plugin for AppMetrica iOS (v2.8.0) and AppMetrica Android (v2.62).
 * Provided sample.
 
+### Version 1.0.1
+* Implemented plugin for AppMetrica Android 6.2.1.
+
+in app level build.gradle add:
+implementation 'com.yandex.android:mobmetricalib:5.3.0'
+
 ## License
 License agreement on use of Yandex AppMetrica is available at [EULA site][LICENSE]
 
