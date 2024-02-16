@@ -23,6 +23,8 @@ import io.appmetrica.analytics.PreloadInfo;
 import io.appmetrica.analytics.AppMetrica;
 import io.appmetrica.analytics.AppMetricaConfig;
 
+import com.google.firebase.FirebaseApp;
+
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -183,10 +185,15 @@ public class AppMetricaPlugin extends CordovaPlugin {
 
     private void activate(final JSONArray args,
                           final CallbackContext callbackContext) throws JSONException {
+
+        final Context context = getActivity().getApplicationContext();
+
+        // Init FirebaseApp for all processes
+        FirebaseApp.initializeApp(context);
+
         final JSONObject configObj = args.getJSONObject(0);
         final AppMetricaConfig config = toConfig(configObj);
 
-        final Context context = getActivity().getApplicationContext();
         AppMetrica.activate(context, config);
 
         synchronized (mLock) {
