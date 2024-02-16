@@ -19,9 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.yandex.metrica.PreloadInfo;
-import com.yandex.metrica.YandexMetrica;
-import com.yandex.metrica.YandexMetricaConfig;
+import io.appmetrica.analytics.PreloadInfo;
+import io.appmetrica.analytics.AppMetrica;
+import io.appmetrica.analytics.AppMetricaConfig;
 
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
@@ -78,7 +78,7 @@ public class AppMetricaPlugin extends CordovaPlugin {
             @Override
             public void run() {
                 if (mAppMetricaActivated) {
-                    YandexMetrica.reportAppOpen(getActivity());
+                    AppMetrica.reportAppOpen(getActivity());
                 }
             }
         });
@@ -96,7 +96,7 @@ public class AppMetricaPlugin extends CordovaPlugin {
         synchronized (mLock) {
             mActivityPaused = true;
             if (mAppMetricaActivated) {
-                YandexMetrica.pauseSession(getActivity());
+                AppMetrica.pauseSession(getActivity());
             }
         }
     }
@@ -105,7 +105,7 @@ public class AppMetricaPlugin extends CordovaPlugin {
         synchronized (mLock) {
             mActivityPaused = false;
             if (mAppMetricaActivated) {
-                YandexMetrica.resumeSession(getActivity());
+                AppMetrica.resumeSession(getActivity());
             }
         }
     }
@@ -138,9 +138,9 @@ public class AppMetricaPlugin extends CordovaPlugin {
         return location;
     }
 
-    public static YandexMetricaConfig toConfig(final JSONObject configObj) throws JSONException {
+    public static AppMetricaConfig toConfig(final JSONObject configObj) throws JSONException {
         final String apiKey = configObj.getString("apiKey");
-        final YandexMetricaConfig.Builder builder = YandexMetricaConfig.newConfigBuilder(apiKey);
+        final AppMetricaConfig.Builder builder = AppMetricaConfig.newConfigBuilder(apiKey);
 
         if (configObj.has("handleFirstActivationAsUpdate")) {
             builder.handleFirstActivationAsUpdate(configObj.getBoolean("handleFirstActivationAsUpdate"));
@@ -184,16 +184,16 @@ public class AppMetricaPlugin extends CordovaPlugin {
     private void activate(final JSONArray args,
                           final CallbackContext callbackContext) throws JSONException {
         final JSONObject configObj = args.getJSONObject(0);
-        final YandexMetricaConfig config = toConfig(configObj);
+        final AppMetricaConfig config = toConfig(configObj);
 
         final Context context = getActivity().getApplicationContext();
-        YandexMetrica.activate(context, config);
+        AppMetrica.activate(context, config);
 
         synchronized (mLock) {
             if (mAppMetricaActivated == false) {
-                YandexMetrica.reportAppOpen(getActivity());
+                AppMetrica.reportAppOpen(getActivity());
                 if (mActivityPaused == false) {
-                    YandexMetrica.resumeSession(getActivity());
+                    AppMetrica.resumeSession(getActivity());
                 }
             }
             mAppMetricaActivated = true;
@@ -210,9 +210,9 @@ public class AppMetricaPlugin extends CordovaPlugin {
         } catch (JSONException ignored) {}
 
         if (eventParametersJSONString != null) {
-            YandexMetrica.reportEvent(eventName, eventParametersJSONString);
+            AppMetrica.reportEvent(eventName, eventParametersJSONString);
         } else {
-            YandexMetrica.reportEvent(eventName);
+            AppMetrica.reportEvent(eventName);
         }
     }
 
@@ -225,7 +225,7 @@ public class AppMetricaPlugin extends CordovaPlugin {
             errorThrowable = new Throwable(errorReason);
         } catch (JSONException ignored) {}
 
-        YandexMetrica.reportError(errorName, errorThrowable);
+        AppMetrica.reportError(errorName, errorThrowable);
     }
 
     private void setLocation(final JSONArray args,
@@ -233,13 +233,13 @@ public class AppMetricaPlugin extends CordovaPlugin {
         final JSONObject locationObj = args.getJSONObject(0);
 
         final Location location = toLocation(locationObj);
-        YandexMetrica.setLocation(location);
+        AppMetrica.setLocation(location);
     }
 
     private void setLocationTracking(final JSONArray args,
                                      final CallbackContext callbackContext) throws JSONException {
         final boolean enabled = args.getBoolean(0);
 
-        YandexMetrica.setLocationTracking(enabled);
+        AppMetrica.setLocationTracking(enabled);
     }
 }

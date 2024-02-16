@@ -1,6 +1,6 @@
 # [ATTENTION] AppMetrica Cordova Plugin
 
-> Support and development of the plugin has been stopped. We do not guarantee the SDK will work correctly.
+> # AppMetrica Cordova Plugin
 
 ## Documentation
 Common documentation available on [AppMetrica official site][DOCUMENTATION]. 
@@ -51,6 +51,9 @@ advertisement**.
 
 ## License
 License agreement on use of Yandex AppMetrica is available at [EULA site][LICENSE]
+
+### Version 1.0.1
+* Implemented plugin for AppMetrica Android 6.2.1.
 
 
 [LICENSE]: https://yandex.com/legal/appmetrica_sdk_agreement/ "Yandex AppMetrica agreement"
